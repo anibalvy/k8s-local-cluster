@@ -1,0 +1,31 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application # this is given by de CRD created by argocd
+metadata:
+  name: my-app-001
+  namespace: argocd   # this is always the namespace where argocd was created
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io  # if this file is deleted from k8s, it will dissapear from argocd, but, the app will be still running
+                                              # this will make that when this happend, also remove the app from k8s
+spec:
+  project: default   # provides a logical group of applicatons, useful when argo is used by multiple teams
+  source:
+    repoURL: https://github.com/kanibalv/my-cluster # it suppouse, ci will push the change to the deployment manifest
+                                                    #  when a commit is done and the image is build and push to registry
+    targetRevision: HEAD
+    # path: my-app-001 # when is locate at the root
+    path: argocd/app-01
+  destination:
+    server: https://kubernetes.default.svc # userful when need that argocd deploy to different clusters,
+                                           #  in this case, this is the current cluster, so is needed
+                                           #  to provide the path to the local k8s api server
+  syncPolicy: # to not sync manually
+    automated:
+      prune: true        #
+      selfHeal: true     # allow synchronize state if k8s state changes
+      allowEmpty: false  # disable deleting all applicaatons resources during automatic syncing
+    syncOptions:
+      - Validate=true         # enable k8s validation, if the deployment has an unknown field, it will be rejected by argocd (default)
+      - CreateNamespace=false  # because are created on deployment (recommended)
+      - PrunePropagationPolicy=foreground
+      - PruneLast=true
