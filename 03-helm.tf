@@ -32,17 +32,27 @@ resource "helm_release" "argocd" {
 # }
 
 
-# resource "helm_release" "metrics-server" {
-#     name             = "metrics-server"
-#     repository       = "https://kubernetes-sigs.github.io/metrics-server/"
-#     chart            = "metrics-server/metrics-server"
-#     namespace        = "monitoring"
-#     create_namespace = true
-#     version          = "3.11.0" # chart version
-#     timeout          = 600
+resource "helm_release" "metrics-server" {
+    name             = "metrics-server"
+    repository       = "https://kubernetes-sigs.github.io/metrics-server/"
+    chart            = "metrics-server"
+    namespace        = "monitoring"
+    create_namespace = true
+    version          = "3.11.0" # chart version
+    timeout          = 600
 
-#     values           = [file("helm/metrics-server-values.yaml")]
-# }
+    wait             = true # wait for the realease to be deployed
+
+    values           = [file("helm/metrics-server-values.yaml")]
+}
 
 
+resource "helm_release" "prometheus_operator_crds" {
+  name = "prometheus-operator-crds"
 
+  repository       = "https://prometheus-community.github.io/helm-charts"
+  chart            = "prometheus-operator-crds"
+  namespace        = "monitoring"
+  create_namespace = true
+  version          = "6.0.0"
+}

@@ -39,13 +39,19 @@ resource "minikube_cluster" "kasa-k8s-cluster" {
     dns_domain   = "kasa-k8s-cluster"
     # cni          = bridge
     # addons       = [
-    # #                   "dashboard",
+    # # #                   "dashboard",
     #                     "metrics-server"
-    # #                   "default-storageclass",
-    # #                   "ingress",
-    # #                   "storage-provisioner"
+    # # #                   "default-storageclass",
+    # # #                   "ingress",
+    # # #                   "storage-provisioner"
     #                 ]
 
+}
+
+output "cluster_api_ip" {
+    value = minikube_cluster.kasa-k8s-cluster.apiserver_ips
+    description = "apiserver_ips"
+    sensitive = false
 }
 
 

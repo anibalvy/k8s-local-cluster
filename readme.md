@@ -8,3 +8,8 @@ bootup of local k8s cluster for testing.
 - minikube
 - jenkins account
 - argocd
+
+
+# steps
+add custom binaries to /bin like argocd executable as needed
+

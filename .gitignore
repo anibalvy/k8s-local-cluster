@@ -8,6 +8,7 @@
 # .tfstate files
 *.tfstate
 *.tfstate.*
+.terraform.lock.hcl
 
 # Crash log files
 crash.log
@@ -41,3 +42,6 @@ terraform.rc
 
 .terrafom.lock.hcl
 /bin/*
+
+# leaves secrets out
+deployments/go-skel-api/01-*
