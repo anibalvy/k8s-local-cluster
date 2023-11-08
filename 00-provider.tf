@@ -24,13 +24,15 @@ terraform {
 
 provider "minikube" {
   # Configuration options
-    kubernetes_version =  "v1.27.4"
+    # kubernetes_version =  "v1.27.4"
+    kubernetes_version = "v1.26.3"
 }
 
 
 
 resource "minikube_cluster" "kasa-k8s-cluster" {
-    driver       = "kvm2"
+    # driver       = "kvm2"
+    driver       = "docker"
     cluster_name = "kasa-k8s-cluster"
     nodes        = 3
     cpus         = 2

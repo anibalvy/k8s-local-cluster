@@ -3,18 +3,18 @@
 #   image:
 #     tag: "v2.6.6"
 
-# server:
-#   extraArgs:
-#     - --insecure   # dont generate self cert and redirect to https
+server:
+  extraArgs:
+    - --insecure   # dont generate self cert and redirect to https
 #
 # Disable https; when exposed only internally, if needed it can be secured with TLS using Ingress
-configs:
-  params:
-    server.insecure: true
+# configs:
+#   params:
+#     server.insecure: true
 
-notifications:  # deploy notifications controller that's is going to be on a different controller
-  enabled: true
-  secret:             # no create secret
-    create: false
-  cm:                 # no create configmap
-    create: false
+# notifications:  # deploy notifications controller that's is going to be on a different controller
+#   enabled: true
+#   secret:             # no create secret
+#     create: false
+#   cm:                 # no create configmap
+#     create: false
