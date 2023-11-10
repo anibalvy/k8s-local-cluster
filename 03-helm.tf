@@ -6,11 +6,11 @@ resource "helm_release" "argocd" {
     chart            = "argo-cd"
     namespace        = "argocd"
     create_namespace = true
-    # version          = "3.35.4" # chart version
-    version          = "5.46.8" # chart version
+    version          = "3.35.4" # chart version
+    # version          = "5.46.8" # chart version
     timeout          = 600
 
-    values           = [file("helm/argocd-defaults-5.49.0.yaml")]
+    values           = [file("helm/argocd-values.yaml")]
 }
  # on tf apply its possible to see deployment with:
  # helm status argocd -n argocd

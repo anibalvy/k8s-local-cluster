@@ -77,7 +77,7 @@ spec:
       volumes:
         - name: env
           configMap:
-            name: dev-go-api2
+            name: dev-go-api
 
 
       # volumes:

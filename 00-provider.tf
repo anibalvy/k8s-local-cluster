@@ -22,10 +22,33 @@ terraform {
   }
 }
 
+
+# provider "aws" {
+#   region = "us-east-1"
+#   default_tags {
+#     tags = {
+#       Region  = "${var.region}"
+#       project = "${var.project}"
+#       User    = "$(var.aws_user)"
+#       ENV     = "${ENVIRONMENT}"
+#     }
+#   }
+# }
+
+# terraform {
+#   # define remote state file, useful for ci/cd
+#   backend "s3" {
+#     bucket = "${BUCKET}"
+#     key    = "terraform/${ENVIRONMENT}.tfstate"
+#     region = "us-east-1"
+#   }
+# }
+
 provider "minikube" {
   # Configuration options
     # kubernetes_version =  "v1.27.4"
-    kubernetes_version = "v1.26.3"
+    # kubernetes_version = "v1.26.1"
+    kubernetes_version = terraform.workspace
 }
 
 
@@ -33,12 +56,13 @@ provider "minikube" {
 resource "minikube_cluster" "kasa-k8s-cluster" {
     # driver       = "kvm2"
     driver       = "docker"
-    cluster_name = "kasa-k8s-cluster"
-    nodes        = 3
-    cpus         = 2
-    memory       = "4096mb"  # "4g"
-    disk_size    = "51200mb" # "50g"
-    dns_domain   = "kasa-k8s-cluster"
+    container_runtime = "containerd"
+    # cluster_name = "kasa-k8s-cluster"
+    # nodes        = 3
+    # cpus         = 2
+    # memory       = "4096mb"  # "4g"
+    # disk_size    = "51200mb" # "50g"
+    # dns_domain   = "kasa-k8s-cluster"
     # cni          = bridge
     # addons       = [
     # # #                   "dashboard",
@@ -92,6 +116,7 @@ provider "helm" {
 
 }
 
+# EKS: dynamically get token to authenticate to cluster.
 # provider "helm" {
 #   kubernetes {
 #     host                   = aws_eks_cluster.demo.endpoint

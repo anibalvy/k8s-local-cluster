@@ -1,7 +1,15 @@
 ---
-# global:
-#   image:
-#     tag: "v2.6.6"
+global:
+  image:
+    tag: "v2.6.6"
+#   networkPolicy:
+#     # -- Create NetworkPolicy objects for all components
+#     create: true
+#     # -- Default deny all ingress traffic
+#     defaultDenyIngress: false
+# redis:
+#    image:
+#      tag: '6.2.6'
 
 server:
   extraArgs:
