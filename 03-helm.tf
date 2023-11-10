@@ -1,6 +1,8 @@
 # helm install argocd -n argocd --create-namespace argo/argo-cd --version 3.35.4 -f terraform/values/argocd.yaml
 
 resource "helm_release" "argocd" {
+    depends_on       = [minikube_cluster.kasa-k8s-cluster]
+
     name             = "argocd"
     repository       = "https://argoproj.github.io/argo-helm"
     chart            = "argo-cd"
@@ -9,9 +11,11 @@ resource "helm_release" "argocd" {
     version          = "3.35.4" # chart version
     # version          = "5.46.8" # chart version
     timeout          = 600
+    wait             = true # wait for the realease to be deployed
 
     values           = [file("helm/argocd-values.yaml")]
 }
+
  # on tf apply its possible to see deployment with:
  # helm status argocd -n argocd
 

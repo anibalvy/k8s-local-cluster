@@ -54,16 +54,17 @@ provider "minikube" {
 
 
 resource "minikube_cluster" "kasa-k8s-cluster" {
-    # driver       = "kvm2"
-    driver       = "docker"
-    container_runtime = "containerd"
-    # cluster_name = "kasa-k8s-cluster"
-    # nodes        = 3
-    # cpus         = 2
-    # memory       = "4096mb"  # "4g"
-    # disk_size    = "51200mb" # "50g"
-    # dns_domain   = "kasa-k8s-cluster"
-    # cni          = bridge
+    driver            = "kvm2"
+    # kvm_network         = "kasa-k8s-cluster"  # must be created
+    # driver            = "docker"
+    # container_runtime = "containerd"  # docker param
+    cluster_name      = "kasa-k8s-cluster"
+    nodes             = 3
+    cpus              = 2
+    memory            = "4096mb"  # "4g"
+    disk_size         = "51200mb" # "50g"
+    dns_domain        = "kasa-k8s-cluster"
+    # cni          = "bridge" # Allows pods to communicate with each other via DNS
     # addons       = [
     # # #                   "dashboard",
     #                     "metrics-server"
@@ -71,6 +72,8 @@ resource "minikube_cluster" "kasa-k8s-cluster" {
     # # #                   "ingress",
     # # #                   "storage-provisioner"
     #                 ]
+
+    wait = ["all"]
 
 }
 
@@ -100,7 +103,7 @@ provider "kubectl" {
   client_certificate     = minikube_cluster.kasa-k8s-cluster.client_certificate
   client_key             = minikube_cluster.kasa-k8s-cluster.client_key
   cluster_ca_certificate = minikube_cluster.kasa-k8s-cluster.cluster_ca_certificate
-  load_config_file = false
+  load_config_file       = false
 }
 
 provider "helm" {
