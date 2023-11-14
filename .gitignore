@@ -41,7 +41,8 @@ terraform.rc
 # End of https://www.toptal.com/developers/gitignore/api/terraform
 
 .terrafom.lock.hcl
-/bin/*
+/bin/argo*
+!/bin/install.sh
 
 # leaves secrets out
 deployments/go-skel-api/01-*
