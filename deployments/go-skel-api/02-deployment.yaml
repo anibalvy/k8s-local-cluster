@@ -27,7 +27,7 @@ spec:
       containers:
       - name: dev-go-api
         image:  anibalvy/go-api-skel:dev
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always # Always / IfNotPresent / Never
         resources:
           requests:
             cpu: 100m
