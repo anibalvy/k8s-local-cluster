@@ -26,6 +26,7 @@
 
 #   manifest = yamldecode(file("argocd/go-skel-api-app.yaml"))
 # }
+# GO-API
 resource "kubectl_manifest" "argocd-go-api-ns" {
   yaml_body = file("deployments/go-skel-api/00-namespace.yaml")
   depends_on = [

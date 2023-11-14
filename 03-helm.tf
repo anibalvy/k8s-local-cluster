@@ -35,12 +35,16 @@ resource "helm_release" "argocd" {
 # }
 
 
-# resource "helm_release" "prometheus_operator_crds" {
-#   name = "prometheus-operator-crds"
+resource "helm_release" "kube-prometheus-stack" {
+  name = "kube-prometheus-stack"
 
-#   repository       = "https://prometheus-community.github.io/helm-charts"
-#   chart            = "prometheus-operator-crds"
-#   namespace        = "monitoring"
-#   create_namespace = true
-#   version          = "6.0.0"
-# }
+  repository       = "https://prometheus-community.github.io/helm-charts"
+  chart            = "kube-prometheus-stack"
+  namespace        = "monitoring"
+  create_namespace = true
+  version          = "54.0.1"
+    # wait             = true # wait for the realease to be deployed
+
+  values           = [file("helm/kube-prometheus-stack-values-v54.0.1.yaml")]
+}
+

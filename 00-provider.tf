@@ -65,13 +65,13 @@ resource "minikube_cluster" "kasa-k8s-cluster" {
     disk_size         = "51200mb" # "50g"
     dns_domain        = "kasa-k8s-cluster"
     # cni          = "bridge" # Allows pods to communicate with each other via DNS
-    # addons       = [
+    addons       = [
     # # #                   "dashboard",
-    #                     "metrics-server"
+                        "metrics-server"
     # # #                   "default-storageclass",
     # # #                   "ingress",
     # # #                   "storage-provisioner"
-    #                 ]
+                    ]
 
     wait = ["all"]
 
